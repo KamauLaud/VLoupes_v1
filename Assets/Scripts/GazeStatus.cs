@@ -43,7 +43,7 @@ namespace VarjoExample
             
             UnityEngine.Debug.Log("Gaze Status - real eye shit: " + leftEyeStatus.ToString() + " " + rightEyeStatus.ToString());
 
-
+            //
             if ( isLeftWink(leftEyeStatus, rightEyeStatus))
             {
                 lastLeftWink += Time.deltaTime;

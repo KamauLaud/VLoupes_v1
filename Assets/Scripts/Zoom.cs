@@ -120,23 +120,23 @@ namespace VarjoExample {
         }
 
         //TODO: Figure out the actual zoom levels based on the width/height ratio
-        // solve the following to find corresponding zoom  w/h val = 1 - ( 0.5 * Zoom Lvl / 4 )
+        // solve the following to find corresponding zoom  w/h val = 
         // 
         public void setZoom(ZoomLevel level)
         {
             switch (level)
             {
                 case ZoomLevel.NONE:
-                    setZoom(.875f);
+                    setZoom(1.0f);
                     break;
                 case ZoomLevel.TWO_X:
-                    setZoom(.75f);
+                    setZoom(0.5f);
                     break;
                 case ZoomLevel.TWOP5_X:
-                    setZoom(.6875f);
+                    setZoom(0.4f);
                     break;
                 case ZoomLevel.THREE_X:
-                    setZoom(.625f);
+                    setZoom(0.33333f);
                     break;
             }
         }
@@ -152,9 +152,12 @@ namespace VarjoExample {
             {
                 wh_value = MinScale;
             }
+
             _currentScale.center = lockedCenter;
             _currentScale.width = wh_value;
             _currentScale.height = _currentScale.width;
+            _currentScale.x = (float) (0.5 - (wh_value / 2));
+            _currentScale.y = (float) (0.5 - (wh_value / 2));
             view.uvRect = _currentScale;
 
             double copy;
