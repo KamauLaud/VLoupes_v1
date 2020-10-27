@@ -1,4 +1,5 @@
-﻿using System.CodeDom;
+﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class MenuHandler : MonoBehaviour
     public const int nFrames = 8; // able to flick away for 15 frames or 0.5 seconds assuming 
     private const float secondaryClickTime = 0.9f;
     private const float primaryClickTime = 0.25f;
-    public static float DwellTimeDefault = 1.2f;
+    public static float DwellTimeDefault = 0.85f;
     public const bool twoStepEnable = false;
     
 
@@ -101,7 +102,9 @@ public class MenuHandler : MonoBehaviour
 
     public void resetGazeTimers()
     {
+        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset started.);");
         setupGazeRef("reset");
+        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset finished.);");
     }
 
     //will revert menu to initial state 
@@ -194,22 +197,37 @@ public class MenuHandler : MonoBehaviour
 
             case "2-step":
                 //set indiviual click timers for all buttons
-                gazeInit.GetComponent<VarjoGazeTarget>().setClickTimer(primaryClickTime);
-                gt1.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                gt2.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                gt3.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                gt4.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                try
+                {
+                    gazeInit.GetComponent<VarjoGazeTarget>().setClickTimer(primaryClickTime);
+                    gt1.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                    gt2.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                    gt3.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                    gt4.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                }
+                catch(Exception e)
+                {
+                     UnityEngine.Debug.Log("MenuHandlerDebug | caught exception | " + e);
+                }
                 break;
             case "reset":
-                
-                //gazeInit.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                gt1.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                gt2.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                gt3.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                gt4.GetComponent<VarjoGazeTarget>().resetGazeTimer();
 
-                GameObject gt_cancel = GameObject.FindGameObjectWithTag("gt_cancel");
-                gt_cancel.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                try
+                {
+                    gazeInit.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    gt1.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    gt2.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    gt3.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    gt4.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+
+                    GameObject gt_cancel = GameObject.FindGameObjectWithTag("gt_cancel");
+                    gt_cancel.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                }
+                catch (Exception e)
+                {
+                    UnityEngine.Debug.Log("MenuHandlerDebug | caught exception | " + e);
+                }
+
                 break;
             default:
                 break;
