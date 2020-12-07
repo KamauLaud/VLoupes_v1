@@ -23,20 +23,15 @@ namespace VarjoExample {
         public RawImage view;
         private GameObject initZoom;
         private GameObject gazeTargets;
+        private GameObject menuHandler;
 
         private TextMesh noti;
 
-
-        private void Awake()
+        private void Start()
         {
             initZoom = GameObject.FindGameObjectWithTag("gt_init");
             gazeTargets = GameObject.FindGameObjectWithTag("gazetarget");
-            initZoom.SetActive(true);
-            gazeTargets.SetActive(false);
-        }
-
-        private void Start()
-        {
+            menuHandler = GameObject.FindGameObjectWithTag("menu_control");
             view = GameObject.FindGameObjectWithTag("leftEye").GetComponent<RawImage>();
             noti = GameObject.FindGameObjectWithTag("zoomLvL").GetComponent<TextMesh>();
 
@@ -74,8 +69,9 @@ namespace VarjoExample {
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
+                //originally false
                 primarySwp = !primarySwp;
-                flipGUI(primarySwp);
+                flipGUI(primarySwp, !primarySwp);
 
                 UnityEngine.Debug.Log("InitZoom texture -> " + initZoom.GetComponent<Renderer>().material.name);
             }
@@ -198,11 +194,14 @@ namespace VarjoExample {
         }
 
         //Shows the primary button and hides the secondary buttons or vice-versa based on flipper
-        private void flipGUI(bool flipper)
+        public void flipGUI(bool primaryHide, bool secondaryHide)
         {
-            initZoom.SetActive(!flipper);
-            gazeTargets.SetActive(flipper);
+            //if primaryHide == true, hide button
+            menuHandler.GetComponent<MenuHandler>().hideMenuObject(primaryHide,
+                initZoom.tag, new Vector3(3.3139f,-1.286f,0));
 
+            menuHandler.GetComponent<MenuHandler>().hideMenuObject(secondaryHide, 
+                gazeTargets.tag, new Vector3(1.84f, -1.84f, 0));
         }
 
         public GameObject getGTs()

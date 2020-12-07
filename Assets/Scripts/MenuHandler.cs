@@ -8,14 +8,12 @@ using VarjoExample;
 public class MenuHandler : MonoBehaviour
 {
     //TODO eventually we want to move all HUD/MENU/INTERFACE functionality here!!
-    private GameObject gazeInit;
     private GameObject secMenu;
-    private GameObject gt1;
-    private GameObject gt2;
-    private GameObject gt3;
-    private GameObject gt4;
+    private GameObject[] gaze_targets;
     private GameObject gazeWatcher;
     private GameObject topMenu;
+    private GameObject zoomMenu;
+    private GameObject mainCamera;
 
     // revertTimer > secondaryClickTime > primaryClickTime >> look threshold
     private const float revertTime = 1.2f;
@@ -26,6 +24,8 @@ public class MenuHandler : MonoBehaviour
     private const float primaryClickTime = 0.25f;
     public static float DwellTimeDefault = 1.0f;
     public const bool twoStepEnable = false;
+    public static Vector3 goldenPos_init;
+    public static Vector3 goldenPos_zoomMenu;
     
 
 
@@ -40,17 +40,37 @@ public class MenuHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         //secure reference to all menu associated gaze targets
-        gazeInit = GameObject.FindGameObjectWithTag("gt_init");
         gazeWatcher = GameObject.FindGameObjectWithTag("continousController");
         topMenu = GameObject.FindGameObjectWithTag("topMenu");
+        zoomMenu = GameObject.FindGameObjectWithTag("gazetarget");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        hideMenuObject(true, zoomMenu.tag, goldenPos_zoomMenu);
+       
+        gaze_targets = new GameObject[6];
+        
+        gaze_targets[0] = GameObject.FindGameObjectWithTag("gt_init");
+
+        //hideMenuObject(false, gaze_targets[0].tag, goldenPos_init);
+        
+        gaze_targets[1] = GameObject.FindGameObjectWithTag("gt_1x");
+        gaze_targets[2] = GameObject.FindGameObjectWithTag("gt_2x");
+        gaze_targets[3] = GameObject.FindGameObjectWithTag("gt_2.5x");
+        gaze_targets[4] = GameObject.FindGameObjectWithTag("gt_3x");
+        gaze_targets[5] = GameObject.FindGameObjectWithTag("gt_cancel");
+
+        //zoom modes
         discreteEnable = true;
+        topMenu.SetActive(discreteEnable);
+   
+        continousEnable = false;
+        gazeWatcher.SetActive(continousEnable);
+
+        //2 step revert timer related
         rTimerStarted = false;
         dwellInProgress = false;
-        continousEnable = false;
-
-        topMenu.SetActive(discreteEnable);
-        gazeWatcher.SetActive(continousEnable);
         revertTimer = new System.Diagnostics.Stopwatch();
         lastGazedAt = "nah, b";
     }
@@ -68,6 +88,11 @@ public class MenuHandler : MonoBehaviour
             gazeWatcher.SetActive(continousEnable);
 
             UnityEngine.Debug.Log("Menu Debug | interface toggled");
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            UnityEngine.Debug.Log("Menu Debug | moved init button");
+            //gaze_targets[0].transform.localposition = goldenPos_init;
         }
 
 
@@ -100,16 +125,10 @@ public class MenuHandler : MonoBehaviour
         VarjoGazeTarget.ResetTimer -= resetGazeTimers;
     }
 
-    public void resetGazeTimers()
-    {
-        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset started.);");
-        setupGazeRef("reset");
-        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset finished.);");
-    }
-
     //will revert menu to initial state 
     public void revertMenu()
     {
+        /***
         //after the primary is pressed, this will be called, 
         // if none of the gaze timers are > 0, revert menu back to primary stage
        
@@ -127,6 +146,7 @@ public class MenuHandler : MonoBehaviour
             gazeInit.SetActive(true);
             UnityEngine.Debug.Log("MenuHandlerDebug - revertHappened");
         }
+        ***/
     }
 
     private void startMenu()
@@ -160,20 +180,15 @@ public class MenuHandler : MonoBehaviour
         rTimerStarted = false;
     }
 
+    public void resetGazeTimers()
+    {
+        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset started.)");
+        setupGazeRef("reset");
+        UnityEngine.Debug.Log("MenuHandlerDebug - Gaze timer reset finished.)");
+    }
+
     private void setupGazeRef(string mode)
     {
-        gazeInit = GameObject.FindGameObjectWithTag("gt_init");
-        secMenu = GameObject.FindGameObjectWithTag("gazetarget");
-        gt1 = GameObject.FindGameObjectWithTag("gt_1x");
-        gt2 = GameObject.FindGameObjectWithTag("gt_2x");
-        gt3 = GameObject.FindGameObjectWithTag("gt_2.5x");
-        gt4 = GameObject.FindGameObjectWithTag("gt_3x");
-
-        //container.Add(secMenu);
-       // container.Add(gt1);
-        //container.Add(gt2);
-        //container.Add(gt3);
-       // container.Add(gt4);
 
         switch (mode)
         {
@@ -199,11 +214,18 @@ public class MenuHandler : MonoBehaviour
                 //set indiviual click timers for all buttons
                 try
                 {
-                    gazeInit.GetComponent<VarjoGazeTarget>().setClickTimer(primaryClickTime);
-                    gt1.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                    gt2.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                    gt3.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
-                    gt4.GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                    for(int i = 0; i < gaze_targets.Length; i++)
+                    {
+                        if( i == 0)
+                        {
+                            gaze_targets[i].GetComponent<VarjoGazeTarget>().setClickTimer(primaryClickTime);
+                        }
+                        else
+                        {
+                            gaze_targets[i].GetComponent<VarjoGazeTarget>().setClickTimer(secondaryClickTime);
+                        }
+                        
+                    }
                 }
                 catch(Exception e)
                 {
@@ -212,27 +234,40 @@ public class MenuHandler : MonoBehaviour
                 break;
             case "reset":
 
-                try
+                for (int i = 0; i < gaze_targets.Length; i++)
                 {
-                    gazeInit.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                    gt1.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                    gt2.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                    gt3.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-                    gt4.GetComponent<VarjoGazeTarget>().resetGazeTimer();
-
-                    GameObject gt_cancel = GameObject.FindGameObjectWithTag("gt_cancel");
-                    gt_cancel.GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    try
+                    {
+                        UnityEngine.Debug.LogError("MenuHandlerDebug | trying to reset  " + gaze_targets[i].tag);
+                        gaze_targets[i].GetComponent<VarjoGazeTarget>().resetGazeTimer();
+                    }
+                    catch (Exception e)
+                    {
+                        UnityEngine.Debug.LogError("MenuHandlerDebug | caught exception - " + e.ToString() + " at index " + i.ToString());
+                    }
                 }
-                catch (Exception e)
-                {
-                    UnityEngine.Debug.Log("MenuHandlerDebug | caught exception | " + e);
-                }
-
                 break;
             default:
                 break;
         }
         
 
+    }
+
+    public void hideMenuObject(bool hide, String go_tag, Vector3 return_pos)
+    {
+        GameObject menu_item = GameObject.FindGameObjectWithTag(go_tag);
+
+        if (hide)
+        {
+            //move the zoomMenu far far away but DO NOT deactivate it
+            menu_item.transform.Translate(new Vector3(0f, 0f, 30f));  
+            //values made need to change when headset is tracked
+        }
+        else
+        {
+            //bring it back to the front and center
+            menu_item.transform.Translate(new Vector3(0f, 0f, -30f));
+        }
     }
 }
