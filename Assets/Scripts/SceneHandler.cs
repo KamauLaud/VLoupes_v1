@@ -11,7 +11,7 @@ public class SceneHandler : MonoBehaviour
     private readonly int numTrials = 10;
     private readonly float lowerBound = 1.0f;
     private readonly float upperBound = 3.0f;
-    public const bool testing = true;
+    public const bool testing = false;
     private bool startedExp;
     private int completedTrials;
     public static int correctTarget;

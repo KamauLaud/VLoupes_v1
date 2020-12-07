@@ -13,9 +13,12 @@ namespace VarjoExample
         private VarjoPlugin.GazeData gStatus;
         private float lastLeftWink;
         private float lastRightWink;
-        private readonly float winkEngage = 0.5f;
+        private readonly float winkEngage = 0.333f;
+        private readonly float contZoomAdjust = 0.00625f;
+        private readonly float wh_maxZoom = 0.25f; //corresponds to 4x zoom
+        private readonly float wh_minZoom = 1.0f; //corresponds to 1x zoom+
+
         private Zoom zoomScript;
-        private readonly float contZoomAdjust = 0.00025f;
         public GameObject gazeTargets;
         public GameObject initZoom;
 
@@ -53,7 +56,22 @@ namespace VarjoExample
                     UnityEngine.Debug.Log("Gaze Status - Left eye continous zooming OUT, baby!");
                     // perform left action - zoom out
                     float curWH = zoomScript.getWH();
-                    zoomScript.setZoom(curWH + contZoomAdjust);
+                    float adjustment = curWH + contZoomAdjust;
+                    
+                    if (adjustment > wh_minZoom)
+                    {
+                        zoomScript.setZoom(wh_minZoom);
+                    }
+                    else if (adjustment < wh_maxZoom)
+                    {
+                        zoomScript.setZoom(wh_maxZoom);
+                    }
+                    else
+                    {
+                        zoomScript.setZoom(adjustment);
+                    }
+
+                    
                 }
             }
             else
@@ -72,8 +90,21 @@ namespace VarjoExample
                     UnityEngine.Debug.Log("Gaze Status - Right eye continous zooming IN, baby!");
                     // perform right action - zoom in
                     float curWH = zoomScript.getWH();
-                    zoomScript.setZoom(curWH - contZoomAdjust);
-                    
+                    float adjustment = curWH - contZoomAdjust;
+
+                    if (adjustment > wh_minZoom)
+                    {
+                        zoomScript.setZoom(wh_minZoom);
+                    }
+                    else if (adjustment < wh_maxZoom)
+                    {
+                        zoomScript.setZoom(wh_maxZoom);
+                    }
+                    else
+                    {
+                        zoomScript.setZoom(adjustment);
+                    }
+
                 }
             }
             else

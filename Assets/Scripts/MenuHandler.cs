@@ -22,7 +22,7 @@ public class MenuHandler : MonoBehaviour
     private System.Diagnostics.Stopwatch revertTimer;
     public const float lookThreshold = 0.08f;
     public const int nFrames = 8; // able to flick away for 15 frames or 0.5 seconds assuming 
-    private const float secondaryClickTime = 0.9f;
+    private const float secondaryClickTime = 1.2f;
     private const float primaryClickTime = 0.25f;
     public static float DwellTimeDefault = 1.0f;
     public const bool twoStepEnable = false;

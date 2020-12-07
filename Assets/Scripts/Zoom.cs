@@ -119,8 +119,6 @@ namespace VarjoExample {
             view.uvRect = _currentScale;
         }
 
-        //TODO: Figure out the actual zoom levels based on the width/height ratio
-        // solve the following to find corresponding zoom  w/h val = 
         // zoom level = 1/wh_val
         public void setZoom(ZoomLevel level)
         {
@@ -141,37 +139,28 @@ namespace VarjoExample {
             }
         }
 
-        public void setZoom(float wh_value)
+        public void setZoom(float wh_ratio)
         {
-            if(wh_value > MaxScale)
-            {
-                wh_value = MaxScale;
-            }
-
-            if (wh_value < MinScale)
-            {
-                wh_value = MinScale;
-            }
 
             _currentScale.center = lockedCenter;
-            _currentScale.width = wh_value;
-            _currentScale.height = _currentScale.width;
-            _currentScale.x = (float) (0.5 - (wh_value / 2));
-            _currentScale.y = (float) (0.5 - (wh_value / 2));
+            _currentScale.width = wh_ratio;
+            _currentScale.height = wh_ratio;
+            _currentScale.x = (float) (0.5 - (wh_ratio / 2));
+            _currentScale.y = (float) (0.5 - (wh_ratio / 2));
             view.uvRect = _currentScale;
 
             double copy;
-            if(wh_value == 1)
+            if(wh_ratio == 1)
             {
                 noti.text = "1x";
                 copy = 1;
             }
             else
             {
-                copy = 1 / wh_value;
-                noti.text = copy.ToString() + "x";
+                copy = 1 / wh_ratio;
+                noti.text = copy.ToString("#.##") + "x";
             }
-            UnityEngine.Debug.Log("Check Noti | wh_value, noti.text = " + wh_value.ToString() + " " + copy.ToString());
+            UnityEngine.Debug.Log("Check Noti | wh_value, noti.text = " + wh_ratio.ToString("#.###") + " " + copy.ToString());
         }
 
         public float getWH()
