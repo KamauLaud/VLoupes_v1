@@ -480,13 +480,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643363528}
-  m_LocalRotation: {x: -0.00014212102, y: 0.0010269338, z: -0.0026517306, w: 0.999996}
-  m_LocalPosition: {x: 0.27350006, y: 0.15224998, z: 0.86940795}
-  m_LocalScale: {x: 0.10018024, y: 0.081467256, z: 0.37092802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.35, z: -0.001}
+  m_LocalScale: {x: 0.100180246, y: 0.08146727, z: 0.37092802}
   m_Children:
   - {fileID: 1350132336}
-  m_Father: {fileID: 4273081580146057}
-  m_RootOrder: 2
+  m_Father: {fileID: 1235722498}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655020686
 GameObject:
@@ -992,7 +992,7 @@ Transform:
   - {fileID: 1130424052}
   - {fileID: 655020687}
   m_Father: {fileID: 4273081580146057}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113858585
 MonoBehaviour:
@@ -1244,9 +1244,10 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235722494}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.8763}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 643363533}
   - {fileID: 1520871710}
   m_Father: {fileID: 4273081580146057}
   m_RootOrder: 0
@@ -1454,12 +1455,12 @@ RectTransform:
   m_LocalScale: {x: 0.5063, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1235722498}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -0.13700001, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2.13796, y: 1.84023}
+  m_SizeDelta: {x: 3.776, y: 3.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1520871711
 MonoBehaviour:
@@ -1697,7 +1698,6 @@ Transform:
   m_Children:
   - {fileID: 1235722498}
   - {fileID: 4098118271431753}
-  - {fileID: 643363533}
   - {fileID: 1113858584}
   m_Father: {fileID: 4502136072941833}
   m_RootOrder: 0
