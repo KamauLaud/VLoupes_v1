@@ -8,10 +8,10 @@ using VarjoExample;
 
 public class SceneHandler : MonoBehaviour
 {
-    private readonly int numTrials = 50;
+    private readonly int numTrials = 10;
     private readonly float lowerBound = 1.0f;
-    private readonly float upperBound = 7.0f;
-    public const bool testing = false;
+    private readonly float upperBound = 3.0f;
+    public const bool testing = true;
     private bool startedExp;
     private int completedTrials;
     public static int correctTarget;

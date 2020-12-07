@@ -15,7 +15,7 @@ namespace VarjoExample
         private float lastRightWink;
         private readonly float winkEngage = 0.5f;
         private Zoom zoomScript;
-        private readonly float contZoomAdjust = 0.005f;
+        private readonly float contZoomAdjust = 0.00025f;
         public GameObject gazeTargets;
         public GameObject initZoom;
 
@@ -41,7 +41,7 @@ namespace VarjoExample
             leftEyeStatus = gStatus.leftStatus;
             rightEyeStatus = gStatus.rightStatus;
             
-            UnityEngine.Debug.Log("Gaze Status - real eye shit: " + leftEyeStatus.ToString() + " " + rightEyeStatus.ToString());
+            UnityEngine.Debug.Log("Gaze Status - LEFT/RIGHT: " + leftEyeStatus.ToString() + " " + rightEyeStatus.ToString());
 
             //
             if ( isLeftWink(leftEyeStatus, rightEyeStatus))
@@ -50,10 +50,10 @@ namespace VarjoExample
                 if (lastLeftWink > winkEngage)
                 {
                     //zoom start
-                    UnityEngine.Debug.Log("Gaze Status - Left eye continous zooming IN, baby!");
-                    // perform left action - zoom in
+                    UnityEngine.Debug.Log("Gaze Status - Left eye continous zooming OUT, baby!");
+                    // perform left action - zoom out
                     float curWH = zoomScript.getWH();
-                    zoomScript.setZoom(curWH - contZoomAdjust);
+                    zoomScript.setZoom(curWH + contZoomAdjust);
                 }
             }
             else
@@ -69,10 +69,10 @@ namespace VarjoExample
                 lastRightWink += Time.deltaTime;
                 if (lastRightWink > winkEngage)
                 {
-                    UnityEngine.Debug.Log("Gaze Status - Right eye continous zooming OUT, baby!");
-                    // perform right action - zoom out
+                    UnityEngine.Debug.Log("Gaze Status - Right eye continous zooming IN, baby!");
+                    // perform right action - zoom in
                     float curWH = zoomScript.getWH();
-                    zoomScript.setZoom(curWH + contZoomAdjust);
+                    zoomScript.setZoom(curWH - contZoomAdjust);
                     
                 }
             }
@@ -80,8 +80,6 @@ namespace VarjoExample
             {
                 lastRightWink = 0;
             }
-
-
 
 
             switch (leftEyeStatus)

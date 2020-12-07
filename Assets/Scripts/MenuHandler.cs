@@ -24,7 +24,7 @@ public class MenuHandler : MonoBehaviour
     public const int nFrames = 8; // able to flick away for 15 frames or 0.5 seconds assuming 
     private const float secondaryClickTime = 0.9f;
     private const float primaryClickTime = 0.25f;
-    public static float DwellTimeDefault = 0.85f;
+    public static float DwellTimeDefault = 1.0f;
     public const bool twoStepEnable = false;
     
 
@@ -71,7 +71,7 @@ public class MenuHandler : MonoBehaviour
         }
 
 
-        if ((float)revertTimer.Elapsed.TotalSeconds >= revertTime && twoStepEnable)
+        if (twoStepEnable && (float)revertTimer.Elapsed.TotalSeconds >= revertTime  )
         {
             revertMenu();
         }

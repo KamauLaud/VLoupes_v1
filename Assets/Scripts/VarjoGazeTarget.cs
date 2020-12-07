@@ -56,6 +56,7 @@ namespace VarjoExample
         private bool lookLeft;
         private float lastHit;
         private bool gazeStarted;
+        private const float exitTime = 0.5f;
 
         void Start()
         {
@@ -93,6 +94,7 @@ namespace VarjoExample
         {
             string gt_tag = self.tag;
             string clickedTarget = gt_tag[2].ToString();
+            lastHit = Time.time;
             
             /*
             UnityEngine.Debug.Log("Debug GT | LookHappened - tag: " + gt_tag + " target #: " + clickedTarget
@@ -107,9 +109,9 @@ namespace VarjoExample
             }
 
             //GazeEnter
-            UnityEngine.Debug.Log("Debug GT - before gazeEnter Gtimer: " + getGazeTimer() + " seconds, tag- " + self.tag);
+           // UnityEngine.Debug.Log("Debug GT - before gazeEnter Gtimer: " + getGazeTimer() + " seconds, tag- " + self.tag);
             OnGazeEnter(gt_tag);
-            UnityEngine.Debug.Log("Debug GT - after gazeEnter Gtimer: " + getGazeTimer() + " seconds, tag- " + self.tag);
+           // UnityEngine.Debug.Log("Debug GT - after gazeEnter Gtimer: " + getGazeTimer() + " seconds, tag- " + self.tag);
             //check if a click occured during this frame
             UnityEngine.Debug.Log("Debug GT - pre dwellClick Gtimer: " + getGazeTimer() + " seconds, tag- " + self.tag);
             dwellClick();
@@ -185,6 +187,18 @@ namespace VarjoExample
             }
         }
 
+        //when gaze leaves a gt, reset the timer (this is what should happen in a perfect world)
+        // in actuality, when gaze leaves target for a small number of frames, reset
+        //                        if it comes back in small number of frames, continue timer
+        public void OnGazeExit()
+        {
+            UnityEngine.Debug.Log("Debug GT | exited target | lookLeft = " + getFirstEnter() + " | timer stopped.");
+            //start frameCounter
+            lookLeft = true;
+            getGazeWatch().Stop();
+            MenuHandler.lastGazedAt = self.tag;
+        }
+
         void dwellClick()
         {
             UnityEngine.Debug.Log("Debug GT - cur & prev before click | current gt: " + self.tag + " last gt: " + MenuHandler.lastGazedAt);
@@ -196,60 +210,74 @@ namespace VarjoExample
                 switch (self.tag)
                 {
                     case "gt_1x":
-                        flipGUI(false);
+                        
                         zoomScript.swapImages(ZoomLevel.NONE);
                         zoomScript.setZoom(ZoomLevel.NONE);
-                        //this.elapsedGazeTime.Reset();
                         MenuClick(false); //this will also reset all other active gazeTimers
                         ResetTimer();
+
                         setDefaultState();
+                        flipGUI(false);
+
                         UnityEngine.Debug.Log("Debug GT - ClickZoom1x");
                         break;
                     case "gt_2x":
-                        flipGUI(false);
+                        
                         zoomScript.swapImages(ZoomLevel.TWO_X);
                         zoomScript.setZoom(ZoomLevel.TWO_X);
-                        //this.elapsedGazeTime.Reset();
+
                         MenuClick(false); //this will also reset all other active gazeTimers
+
                         ResetTimer();
                         setDefaultState();
+                        flipGUI(false);
                         UnityEngine.Debug.Log("Debug GT - ClickZoom2");
                         break;
                     case "gt_2.5x":
-                        flipGUI(false);
+                        
                         zoomScript.swapImages(ZoomLevel.TWOP5_X);
                         zoomScript.setZoom(ZoomLevel.TWOP5_X);
-                        //this.elapsedGazeTime.Reset();
+
                         MenuClick(false); //this will also reset all other active gazeTimers
                         ResetTimer();
+
                         setDefaultState();
+                        flipGUI(false);
+
                         UnityEngine.Debug.Log("Debug GT - ClickZoom2.5");
                         break;
                     case "gt_3x":
-                        flipGUI(false);
+
                         zoomScript.swapImages(ZoomLevel.THREE_X);
                         zoomScript.setZoom(ZoomLevel.THREE_X);
+
                         MenuClick(false); //this will also reset all other active gazeTimers
                         ResetTimer();
+
                         setDefaultState();
+                        flipGUI(false);
+
                         UnityEngine.Debug.Log("Debug GT - ClickZoom3");
                         break;
                     case "gt_cancel":
-                        flipGUI(false);
+                        
                         ResetTimer(); //this will also reset all other active gazeTimers
-                        //this.resetGazeTimer();
                         setDefaultState();
+
+                        flipGUI(false);
+
+
                         UnityEngine.Debug.Log("Debug GT - ClickCancel");
                         break;
                     case "gt_init":
-                        flipGUI(true);
+                        
                         ResetTimer();
-                        //this.resetGazeTimer();
                         setDefaultState();
                         if (MenuHandler.twoStepEnable)
                         {
                             MenuStart(); //when using the 2step process, start it
                         }
+                        flipGUI(true);
                         UnityEngine.Debug.Log("Debug GT - ClickZoomINIT");
                         break;
                     default:
@@ -263,10 +291,8 @@ namespace VarjoExample
                 }
             }
 
-            //reset bFrames every hit - why? 
+            //reset bFrames every dwell click
             resetBFrames();
-            lastHit = Time.time;
-
         }
 
         void Update()
@@ -294,8 +320,10 @@ namespace VarjoExample
                 //UnityEngine.Debug.Log("Debug GT | exception | " + e);
             }
             //exitTime how long can we look away
-            if ( loc == null && gazeStarted )// (Time.time - lastHit > ???)
+            //if ( loc == null && gazeStarted )// (Time.time - lastHit > ???)
+            if (loc == null && (Time.time - lastHit) > exitTime)
             {
+                UnityEngine.Debug.Log("Debug GT - User's gaze left target for too long. Reset timer");
                 //can only exit AFTER an ENTER has occured
                 //this should be done when VarjoGazeRay.gazeRayHit == null
                 OnGazeExit();
@@ -310,17 +338,7 @@ namespace VarjoExample
             }
         }
 
-        //when gaze leaves a gt, reset the timer (this is what should happen in a perfect world)
-        // in actuality, when gaze leaves target for a small number of frames, reset
-        //                        if it comes back in small number of frames, continue timer
-        public void OnGazeExit()
-        {
-            UnityEngine.Debug.Log("Debug GT | exited target | lookLeft = " + getFirstEnter() + " | timer stopped.");
-            //start frameCounter
-            lookLeft = true;
-            getGazeWatch().Stop();
-            MenuHandler.lastGazedAt = self.tag;
-        }
+
 
 
         //Shows the primary button and hides the secondary buttons or vice-versa based on flipper

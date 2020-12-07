@@ -7,8 +7,8 @@ using UnityEngine.UI;
 namespace VarjoExample {
     public class Zoom : MonoBehaviour
     {
-        public float MinScale = 0.1f;
-        public float MaxScale = 0.875f;
+        public float MinScale = 0.25f; //4x zoom
+        public float MaxScale = 1.0f; //1x
 
         public float ScaleIncrement = 0.01f;
         private const float defaultSwpTime = 3.0f; //the time in seconds
@@ -107,7 +107,7 @@ namespace VarjoExample {
             //If we are out of bounds, do nothing and return;
             if (scaleAdjustment <= MinScale || scaleAdjustment >= MaxScale)
             {
-                UnityEngine.Debug.Log("wHAT THE ACTUAL FUCK BRUV");
+                UnityEngine.Debug.Log("...........");
                 UnityEngine.Debug.Log("Changed UV: " + _currentScale.ToString());
                 return;
             }
@@ -121,7 +121,7 @@ namespace VarjoExample {
 
         //TODO: Figure out the actual zoom levels based on the width/height ratio
         // solve the following to find corresponding zoom  w/h val = 
-        // 
+        // zoom level = 1/wh_val
         public void setZoom(ZoomLevel level)
         {
             switch (level)
@@ -136,7 +136,7 @@ namespace VarjoExample {
                     setZoom(0.4f);
                     break;
                 case ZoomLevel.THREE_X:
-                    setZoom(0.33333f);
+                    setZoom(0.3333333f);
                     break;
             }
         }
@@ -168,7 +168,7 @@ namespace VarjoExample {
             }
             else
             {
-                copy = Math.Round(-8 * (wh_value - 1), 1);
+                copy = 1 / wh_value;
                 noti.text = copy.ToString() + "x";
             }
             UnityEngine.Debug.Log("Check Noti | wh_value, noti.text = " + wh_value.ToString() + " " + copy.ToString());
