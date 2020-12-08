@@ -13,7 +13,7 @@ namespace VarjoExample
     /// - Renders the Unity Skybox when the device is disconnected.
     /// </summary>
     /// 
-    public enum ZoomLevel { NONE, TWO_X, TWOP5_X, THREE_X };
+    public enum ZoomLevel { NONE, TWO_X, TWOP5_X, THREE_X, THREEP5_X };
     public class VarjoEventListener : MonoBehaviour
     {
         public GameObject varjoCamera;

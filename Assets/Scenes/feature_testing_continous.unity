@@ -580,8 +580,8 @@ GameObject:
   - component: {fileID: 853654521}
   - component: {fileID: 853654524}
   m_Layer: 0
-  m_Name: gt_2.5x
-  m_TagString: gt_2.5x
+  m_Name: gt_3x
+  m_TagString: gt_3x
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -632,7 +632,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: de022cca068d4274dbbeecf54558d317, type: 2}
+  - {fileID: 2100000, guid: b72f82549aa73e7459a5f6942760834b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -794,8 +794,8 @@ GameObject:
   - component: {fileID: 1084047706}
   - component: {fileID: 1084047705}
   m_Layer: 0
-  m_Name: gt_2x
-  m_TagString: gt_2x
+  m_Name: gt_2.5x
+  m_TagString: gt_2.5x
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -851,7 +851,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 430fde2367131ed4d8443490a105cbdc, type: 2}
+  - {fileID: 2100000, guid: de022cca068d4274dbbeecf54558d317, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1526,8 +1526,8 @@ GameObject:
   - component: {fileID: 2032605969}
   - component: {fileID: 2032605972}
   m_Layer: 0
-  m_Name: gt_3x
-  m_TagString: gt_3x
+  m_Name: gt_3.5x
+  m_TagString: gt_3.5x
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1578,7 +1578,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b72f82549aa73e7459a5f6942760834b, type: 2}
+  - {fileID: 2100000, guid: ab3c88e9bcf9a054180840deea8c67e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

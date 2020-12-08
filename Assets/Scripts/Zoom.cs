@@ -45,25 +45,25 @@ namespace VarjoExample {
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Alpha1)) {
-                setZoom(ZoomLevel.NONE);
-                swapImages(ZoomLevel.NONE);
+               setZoom(ZoomLevel.NONE);
+               //swapImages(ZoomLevel.NONE);
                 UnityEngine.Debug.Log("InitZoom texture -> " + initZoom.GetComponent<Renderer>().material.name);
             } 
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                swapImages(ZoomLevel.TWO_X);
+                //swapImages(ZoomLevel.TWO_X);
                 setZoom(ZoomLevel.TWO_X);
                 UnityEngine.Debug.Log("InitZoom texture -> " + initZoom.GetComponent<Renderer>().material.name);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                swapImages(ZoomLevel.TWOP5_X);
-                setZoom(ZoomLevel.TWOP5_X);
+                //swapImages(ZoomLevel.TWOP5_X);
+                setZoom(ZoomLevel.THREEP5_X);
                 UnityEngine.Debug.Log("InitZoom texture -> " + initZoom.GetComponent<Renderer>().material.name);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                swapImages(ZoomLevel.THREE_X);
+                //swapImages(ZoomLevel.THREE_X);
                 setZoom(ZoomLevel.THREE_X);
                 UnityEngine.Debug.Log("InitZoom texture -> " + initZoom.GetComponent<Renderer>().material.name);
             }
@@ -126,11 +126,18 @@ namespace VarjoExample {
                 case ZoomLevel.TWO_X:
                     setZoom(0.5f);
                     break;
-                case ZoomLevel.TWOP5_X:
-                    setZoom(0.4f);
+                case ZoomLevel.THREEP5_X:
+                    //3.5x
+                    setZoom(0.2857f);
                     break;
                 case ZoomLevel.THREE_X:
                     setZoom(0.3333333f);
+                    break;
+                case ZoomLevel.TWOP5_X:
+                    setZoom(0.4f);
+                    break;
+                default:
+                    setZoom(1.0f);
                     break;
             }
         }

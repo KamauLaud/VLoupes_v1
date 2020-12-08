@@ -212,7 +212,7 @@ namespace VarjoExample
                 {
                     case "gt_1x":
                         
-                        zoomScript.swapImages(ZoomLevel.NONE);
+                        //zoomScript.swapImages(ZoomLevel.NONE);
                         zoomScript.setZoom(ZoomLevel.NONE);
                         MenuClick(false); //this will also reset all other active gazeTimers
                         //ResetTimer();
@@ -224,7 +224,7 @@ namespace VarjoExample
                         break;
                     case "gt_2x":
                         
-                        zoomScript.swapImages(ZoomLevel.TWO_X);
+                        //zoomScript.swapImages(ZoomLevel.TWO_X);
                         zoomScript.setZoom(ZoomLevel.TWO_X);
 
                         MenuClick(false); //this will also reset all other active gazeTimers
@@ -236,7 +236,7 @@ namespace VarjoExample
                         break;
                     case "gt_2.5x":
                         
-                        zoomScript.swapImages(ZoomLevel.TWOP5_X);
+                        //zoomScript.swapImages(ZoomLevel.TWOP5_X);
                         zoomScript.setZoom(ZoomLevel.TWOP5_X);
 
                         MenuClick(false); //this will also reset all other active gazeTimers
@@ -249,7 +249,7 @@ namespace VarjoExample
                         break;
                     case "gt_3x":
 
-                        zoomScript.swapImages(ZoomLevel.THREE_X);
+                        //zoomScript.swapImages(ZoomLevel.THREE_X);
                         zoomScript.setZoom(ZoomLevel.THREE_X);
 
                         MenuClick(false); //this will also reset all other active gazeTimers
@@ -259,6 +259,12 @@ namespace VarjoExample
                         flipGUI(false);
 
                         UnityEngine.Debug.Log("Debug GT - ClickZoom3");
+                        break;
+                    case "gt_3.5x":
+                        zoomScript.setZoom(ZoomLevel.THREEP5_X);
+                        MenuClick(false);
+                        setDefaultState();
+                        flipGUI(false);
                         break;
                     case "gt_cancel":
                         
